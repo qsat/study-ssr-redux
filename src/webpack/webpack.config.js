@@ -12,7 +12,7 @@ var webpack_isomorphic_tools_plugin =
 module.exports =
 {
   context: process.cwd(),
-  entry: { main:'./src/client/index.js' },
+  entry: { main:'./src/client.js' },
   output: { 
     path: './static/dist', // 出力先のパス
     publicPath: '/dist/',

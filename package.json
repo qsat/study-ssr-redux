@@ -1,5 +1,5 @@
 {
-  "name": "noanode-2017",
+  "name": "study-ssr-redux",
   "description": "",
   "version": "0.0.1",
   "private": true,
@@ -9,7 +9,7 @@
     "node": "6.9.1"
   },
   "scripts": {
-    "start": "nodemon bin/start-server.js"
+    "start": "nodemon --ignore 'src/client.js' bin/start-server.js"
   },
   "dependencies": {
     "express": "^4.14.0",
@@ -18,7 +18,9 @@
     "react-redux": "^5.0.2",
     "react-router": "^3.0.1",
     "react-router-redux": "^4.0.7",
-    "redux": "^3.6.0"
+    "redux": "^3.6.0",
+    "redux-actions": "^1.2.0",
+    "redux-form": "^6.4.3"
   },
   "devDependencies": {
     "babel-core": "^6.21.0",

@@ -8,6 +8,8 @@ export default function Html( props ) {
       </head>
       <body>
       <div id="content" dangerouslySetInnerHTML={{__html: props.content}}/>
+      <div id="devtools" />
+      <script dangerouslySetInnerHTML={{ __html: `window.__INITIAL_STATE__=${initialState};` }} />
       <script src={ props.assets.javascript.main} charSet="UTF-8"/>
       </body>
     </html>

@@ -6,8 +6,11 @@ import ReactDOM from "react-dom/server"
 import Html from "./server/components/Html"
 import path from 'path'
 
+import { Provider } from 'react-redux';
 import { match, RouterContext } from 'react-router'
+import { syncHistoryWithStore } from 'react-router-redux';
 import createHistory from 'react-router/lib/createMemoryHistory';
+import createStore from './redux/createStore';
 
 import getRoutes from './routes';
 const app = new Express();
@@ -21,9 +24,9 @@ app.use((req, res) => {
     // hot module replacement is enabled in the development env
     webpack_isomorphic_tools.refresh();
   }
-  const history = createHistory(req.originalUrl);
-
-  //const history = syncHistoryWithStore(memoryHistory, store);
+  const memoryHistory = createHistory(req.originalUrl);
+  const store = createStore( history, {} );
+  const history = syncHistoryWithStore(memoryHistory, store);
 
   function hydrateOnClient() {
     res.send('<!doctype html>\n' +
@@ -48,25 +51,16 @@ app.use((req, res) => {
         res.status(500);
         hydrateOnClient();
       } else if (renderProps) {
-        //loadOnServer({...renderProps, store, helpers: {client}}).then(() => {
-        //  const component = (
-        //    <Provider store={store} key="provider">
-        //      <ReduxAsyncConnect {...renderProps} />
-        //    </Provider>
-        //  );
 
-        //  res.status(200);
-
-        //  global.navigator = {userAgent: req.headers['user-agent']};
-
-        //  res.send('<!doctype html>\n' +
-        //    ReactDOM.renderToString(<Html assets={webpackIsomorphicTools.assets()} component={component} store={store}/>));
-        //});
         res.send('<!doctype html>\n' +
           ReactDOM.renderToString(
             <Html 
               assets={webpack_isomorphic_tools.assets()} 
-              content={ReactDOM.renderToString(<RouterContext {...renderProps}/>)} 
+              content={ReactDOM.renderToString(
+                <Provider store={store} key="provider">
+                  <RouterContext {...renderProps}/>
+                </Provider>
+              )} 
             />
           )
         );
