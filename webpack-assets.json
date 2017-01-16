@@ -1,0 +1,7 @@
+{
+  "javascript": {
+    "main": "/dist/bundle.js"
+  },
+  "styles": {},
+  "assets": {}
+}
